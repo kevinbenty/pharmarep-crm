@@ -1,0 +1,6 @@
+@echo off
+echo Installing frontend dependencies...
+npm install
+echo.
+echo Starting React frontend on http://localhost:5173 ...
+npm run dev
