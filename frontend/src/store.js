@@ -1,33 +1,19 @@
 import { configureStore, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-const API = 'http://localhost:8000';
+import { api } from './api';
 
 // ─── Async Thunks ─────────────────────────────────────────────────────────────
-export const fetchInteractions = createAsyncThunk('interactions/fetchAll', async () => {
-  const res = await axios.get(`${API}/interactions`);
-  return res.data;
-});
+export const fetchInteractions = createAsyncThunk('interactions/fetchAll', () => api.listInteractions());
 
-export const createInteraction = createAsyncThunk('interactions/create', async (data) => {
-  const res = await axios.post(`${API}/interactions`, data);
-  return res.data;
-});
+export const createInteraction = createAsyncThunk('interactions/create', (data) => api.createInteraction(data));
 
-export const updateInteraction = createAsyncThunk('interactions/update', async ({ id, data }) => {
-  const res = await axios.put(`${API}/interactions/${id}`, data);
-  return res.data;
-});
+export const updateInteraction = createAsyncThunk('interactions/update', ({ id, data }) => api.updateInteraction(id, data));
 
 export const deleteInteraction = createAsyncThunk('interactions/delete', async (id) => {
-  await axios.delete(`${API}/interactions/${id}`);
+  await api.deleteInteraction(id);
   return id;
 });
 
-export const sendChatMessage = createAsyncThunk('chat/send', async ({ message, history }) => {
-  const res = await axios.post(`${API}/chat`, { message, history });
-  return res.data.response;
-});
+export const sendChatMessage = createAsyncThunk('chat/send', ({ message, history }) => api.sendChat(message, history));
 
 // ─── Interactions Slice ───────────────────────────────────────────────────────
 const interactionsSlice = createSlice({
