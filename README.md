@@ -2,6 +2,10 @@
 
 AI-first CRM for pharmaceutical field reps to log and manage HCP (Healthcare Professional) interactions.
 
+**🌐 Live demo: [kevinbenty.github.io/pharmarep-crm](https://kevinbenty.github.io/pharmarep-crm/)**
+
+> The live demo runs entirely in your browser with sample data and a simulated AI assistant, so no backend or API key is needed. The full app uses the FastAPI backend, PostgreSQL and the LangGraph agent described below.
+
 ## Tech Stack
 - **Frontend**: React + Redux Toolkit + Vite
 - **Backend**: Python + FastAPI
@@ -47,3 +51,7 @@ npm run dev
 - `PUT /interactions/{id}` — Update interaction
 - `DELETE /interactions/{id}` — Delete interaction
 - `POST /chat` — AI chat endpoint (LangGraph agent)
+
+
+## Demo mode
+The frontend can run without the backend: build or start it with `VITE_DEMO_MODE=true` (for example `VITE_DEMO_MODE=true npm run dev` in `frontend/`). The GitHub Pages demo is built and deployed automatically by `.github/workflows/deploy-demo.yml` on every change to `frontend/`. To point the full app at a deployed backend, set `VITE_API_URL`.
