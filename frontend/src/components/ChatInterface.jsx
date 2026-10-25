@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendChatMessage, addUserMessage, fetchInteractions } from '../store';
 import { Send, Bot, Trash2 } from 'lucide-react';
 import { clearChat } from '../store';
+import { DEMO_MODE } from '../api';
 
 export default function ChatInterface() {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ export default function ChatInterface() {
           </div>
           <div>
             <div style={{ fontWeight: 600, fontSize: 14 }}>CRM AI Assistant</div>
-            <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Powered by Groq · gemma2-9b-it</div>
+            <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{DEMO_MODE ? 'Simulated for this demo' : 'Powered by Groq · gemma2-9b-it'}</div>
           </div>
         </div>
         <button className="btn btn-secondary btn-sm" onClick={() => dispatch(clearChat())}>
