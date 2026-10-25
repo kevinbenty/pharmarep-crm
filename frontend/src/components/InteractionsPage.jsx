@@ -14,6 +14,11 @@ export default function InteractionsPage() {
 
   useEffect(() => { dispatch(fetchInteractions()); }, []);
 
+  // Show the newest interaction straight away instead of an empty detail panel
+  useEffect(() => {
+    if (!selected && items.length) dispatch(setSelected(items[0]));
+  }, [items, selected, dispatch]);
+
   const handleSelect = (item) => {
     dispatch(setSelected(item));
     setEditMode(false);
@@ -26,6 +31,8 @@ export default function InteractionsPage() {
   };
 
   const fmtDate = (d) => d ? new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : '—';
+
+  const initials = (name = '') => name.replace(/^dr\.?\s*/i, '').trim().charAt(0).toUpperCase() || '?';
 
   const positive = items.filter(i => i.sentiment === 'positive').length;
   const followUps = items.filter(i => i.follow_up_required === 'Yes').length;
@@ -89,7 +96,7 @@ export default function InteractionsPage() {
               <div key={item.id} className={`interaction-card ${selected?.id === item.id ? 'selected' : ''}`}
                 onClick={() => handleSelect(item)}>
                 <div className="interaction-card-header">
-                  <span className="interaction-card-name">{item.hcp_name}</span>
+                  <span className="interaction-card-name"><span className="avatar" aria-hidden="true">{initials(item.hcp_name)}</span>{item.hcp_name}</span>
                   <span className={sentimentClass(item.sentiment)}>{item.sentiment || 'neutral'}</span>
                 </div>
                 <div className="interaction-card-meta">
